@@ -19,6 +19,6 @@ namespace PetConnect.Backend.Core
         public string Breed { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string MedicalInfo { get; set; } = string.Empty;
-        public List<byte[]>? Images { get; set; 
+        public List<byte[]>? Images { get; set; }
     }
 }

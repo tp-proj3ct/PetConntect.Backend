@@ -2,7 +2,8 @@
 
 public enum Status
 {
-    Commissioned,
-    InProccess,    
-    Accomplished
+    Pending,
+    Confirmed,
+    Completed,
+    Cancelled
 }

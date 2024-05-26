@@ -6,8 +6,8 @@ namespace PetConnect.Backend.Core
     {
         public long Id { get; set; }
 
-        public User User { get; set; }
-        public long UserId { get; set; }
+        public PetOwnerProfile PetOwnerProfile { get; set; }
+        public long PetOwnerProfileId { get; set; }
 
         public string Name { get; set; } = string.Empty;
         public int Age { get; set; }

@@ -6,4 +6,19 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PetConnect.Backend.Core\PetConnect.Backend.Core.csproj" />
+    <ProjectReference Include="..\PetConnect.Backend.Packages\PetConnect.Packages.csproj" />
+    <ProjectReference Include="..\PetConnect.Backend.UseCases\PetConnect.Backend.UseCases.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>

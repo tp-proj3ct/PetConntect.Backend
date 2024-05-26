@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace PetConnect.Backend.Packages.UseCases;
+namespace PetConnect.Packages.UseCases;
 
 /// <summary>
 /// Расширения для <see cref="Result{T}"/>

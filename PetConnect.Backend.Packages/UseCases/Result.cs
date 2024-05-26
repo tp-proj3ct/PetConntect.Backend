@@ -1,6 +1,4 @@
-﻿using PetConnect.Backend.Packages.UseCases;
-
-namespace PetConnect.Backend.Packages.UseCases;
+﻿namespace PetConnect.Packages.UseCases;
 
 /// <summary>
 /// Результат выполнения команды/запроса

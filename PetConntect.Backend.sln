@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetConnect.Backend.UseCases
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetConnect.Backend.Service", "PetConnect.Backend.Service\PetConnect.Backend.Service.csproj", "{09DC5D24-70F7-4B23-AF67-CAC1D66B1A43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetConnect.Backend.Packages", "PetConnect.Backend.Packages\PetConnect.Backend.Packages.csproj", "{B408DBB2-B2E2-4EDD-ABD5-86D50B6C2D6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetConnect.Packages", "PetConnect.Backend.Packages\PetConnect.Packages.csproj", "{B408DBB2-B2E2-4EDD-ABD5-86D50B6C2D6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

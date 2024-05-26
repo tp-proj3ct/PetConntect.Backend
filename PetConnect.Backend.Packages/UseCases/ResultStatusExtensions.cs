@@ -1,4 +1,4 @@
-﻿namespace PetConnect.Backend.Packages.UseCases;
+﻿namespace PetConnect.Packages.UseCases;
 
 public static class ResultStatusExtensions
 {

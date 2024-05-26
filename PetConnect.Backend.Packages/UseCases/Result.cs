@@ -1,5 +1,8 @@
 ﻿namespace PetConnect.Packages.UseCases;
 
+using PetConnect.Backend.Packages.UseCases;
+using PetConnect.Packages.UseCases;
+
 /// <summary>
 /// Результат выполнения команды/запроса
 /// </summary>
@@ -115,13 +118,10 @@ public readonly struct Result<TResponseValue>
     /// Статус результата не подразумевает наличие результата.
     /// Либо значение отсутствует.
     /// </exception>
-    public TResponseValue GetValue()
-    {
-        return Status.IsSuccess() && value is not null
+    public TResponseValue GetValue() => Status.IsSuccess() && value is not null
             ? value
             : throw new AppException(
                 !Status.IsSuccess()
                 ? string.Format(STATUS_ERROR_MSG, Status)
                 : VALUE_ERROR_MSG);
-    }
 }

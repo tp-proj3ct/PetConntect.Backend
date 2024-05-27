@@ -1,4 +1,5 @@
 ﻿using PetConnect.Backend.Core.Abstractions;
+using PetConnect.Backend.Core.Users;
 
 namespace PetConnect.Backend.Core
 {
@@ -6,8 +7,8 @@ namespace PetConnect.Backend.Core
     {
         public long Id { get; set; }
 
-        public PetOwnerProfile PetOwnerProfile { get; set; }
-        public long PetOwnerProfileId { get; set; }
+        public PetOwner PetOwner { get; set; }
+        public long PetOwnerId { get; set; }
 
         public string Name { get; set; } = string.Empty;
         public int Age { get; set; }

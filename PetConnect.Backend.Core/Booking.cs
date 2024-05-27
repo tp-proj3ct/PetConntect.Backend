@@ -1,4 +1,5 @@
 ﻿using PetConnect.Backend.Core.Abstractions;
+using PetConnect.Backend.Core.Users;
 
 namespace PetConnect.Backend.Core;
 
@@ -9,7 +10,7 @@ public class Booking
     public Service Service { get; set; }
     public long ServiceId { get; set; }
 
-    public PetOwnerProfile Customer { get; set; }
+    public PetOwner Customer { get; set; }
     public long CustomerId { get; set; }
 
     public List<Pet> Pets { get; set; }

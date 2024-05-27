@@ -2,7 +2,8 @@
 
 public enum Role
 {
-    PetSitterUser,
-    PetOwnerUser,
+    None,
+    PetSitter,
+    PetOwner,
     Admin
 }

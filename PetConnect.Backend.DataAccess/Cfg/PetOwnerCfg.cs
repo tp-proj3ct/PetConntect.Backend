@@ -9,7 +9,7 @@ internal class PetOwnerCfg : IEntityTypeConfiguration<PetOwner>
     public void Configure(EntityTypeBuilder<PetOwner> builder)
     {
         builder.HasMany(pop => pop.Pets)
-            .WithOne(p => p.PetOwner)
+            .WithOne()
             .HasForeignKey(p => p.PetOwnerId);
 
         builder.HasMany(psp => psp.Reviews)

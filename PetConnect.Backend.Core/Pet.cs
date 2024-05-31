@@ -7,12 +7,12 @@ namespace PetConnect.Backend.Core
     {
         public long Id { get; set; }
 
-        public PetOwner PetOwner { get; set; }
         public long PetOwnerId { get; set; }
 
         public string Name { get; set; } = string.Empty;
         public int Age { get; set; }
         public int Weight { get; set; }
+
         public Gender Gender { get; set; }
 
         public string Behavior { get; set; } = string.Empty;
@@ -20,6 +20,7 @@ namespace PetConnect.Backend.Core
         public string Breed { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string MedicalInfo { get; set; } = string.Empty;
-        public List<byte[]>? Images { get; set; }
+
+        public List<Image>? Images { get; set; }
     }
 }

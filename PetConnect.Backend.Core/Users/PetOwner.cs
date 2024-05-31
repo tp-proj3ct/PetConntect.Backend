@@ -4,6 +4,6 @@ namespace PetConnect.Backend.Core.Users;
 
 public class PetOwner : User
 {
-    public Pet[]? Pets { get; set; }
-    public Review[]? Reviews { get; set; }
+    public ICollection<Pet>? Pets { get; set; }
+    public ICollection<Review>? Reviews { get; set; }
 }

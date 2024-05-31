@@ -8,6 +8,6 @@ public class PetSitter : User
     public double Rating { get; set; }
     public int ExperienceYears { get; set; }
 
-    public Service[]? Services { get; set; }
-    public Review[]? Reviews { get; set; }
+    public ICollection<Service> Services { get; set; }
+    public ICollection<Review> Reviews { get; set; }
 }

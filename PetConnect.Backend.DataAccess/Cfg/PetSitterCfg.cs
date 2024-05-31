@@ -20,7 +20,7 @@ internal class PetSitterCfg : IEntityTypeConfiguration<PetSitter>
             .HasDefaultValue(0);
 
         builder.HasMany(psp => psp.Services)
-            .WithOne(s => s.PetSitter)
+            .WithOne()
             .HasForeignKey(s => s.PetSitterId);
 
         builder.HasMany(psp => psp.Reviews)

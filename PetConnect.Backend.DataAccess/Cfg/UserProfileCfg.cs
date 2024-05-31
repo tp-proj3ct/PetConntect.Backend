@@ -11,20 +11,18 @@ internal class UserProfileCfg : IEntityTypeConfiguration<UserProfile>
         builder.HasKey(up => up.Id);
 
         builder.Property(up => up.Name)
-            .IsRequired()
-            .HasMaxLength(100);
+               .IsRequired()
+               .HasMaxLength(32);
 
         builder.Property(up => up.Surname)
-            .IsRequired()
-            .HasMaxLength(100);
-
-        builder.Property(up => up.ProfilePic)
-            .HasColumnType("varbinary(max)");
+               .IsRequired()
+               .HasMaxLength(32);
 
         builder.HasOne(up => up.User)
-            .WithOne(u => u.Profile)
-            .HasForeignKey<User>(u => u.UserProfileId);
+               .WithOne()
+               .HasForeignKey<UserProfile>(up => up.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
 
-        builder.ToTable("UserProfiles");
+        builder.Property(up => up.ProfilePic).HasColumnType("bytea");
     }
 }

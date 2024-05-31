@@ -19,9 +19,6 @@ public abstract class User
 
     public bool IsBlocked { get; set; } = false;
 
-    public UserProfile UserProfile { get; set; }
-    public long UserProfileId { get; set; }
-
     public void SetPassword(string password, PasswordOptions passwordOptions)
     {
         PasswordHash = CryptographyService.HashPassword(password, passwordOptions.Salt);

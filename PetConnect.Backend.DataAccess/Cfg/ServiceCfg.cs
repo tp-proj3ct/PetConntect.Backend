@@ -20,8 +20,8 @@ internal class ServiceCfg : IEntityTypeConfiguration<Service>
         builder.Property(s => s.Price)
             .IsRequired();
 
-        builder.HasOne(s => s.PetSitterProfile)
+        builder.HasOne(s => s.PetSitter)
             .WithMany(psp => psp.Services)
-            .HasForeignKey(s => s.PetSitterProfileId);
+            .HasForeignKey(s => s.PetSitterId);
     }
 }

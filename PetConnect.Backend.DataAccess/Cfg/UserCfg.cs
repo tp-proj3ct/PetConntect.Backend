@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using PetConnect.Backend.Core;
+using PetConnect.Backend.Core.Abstractions;
+using PetConnect.Backend.Core.Users;
 
 namespace PetConnect.Backend.DataAccess.Cfg;
 
@@ -10,25 +11,14 @@ internal class UserCfg : IEntityTypeConfiguration<User>
     {
         builder.HasKey(u => u.Id);
 
-        builder.Property(u => u.Username)
-            .IsRequired()
-            .HasMaxLength(100);
+        builder.HasAlternateKey(u => u.Login);
+        builder.HasAlternateKey(u => u.Email);
 
-        builder.Property(u => u.Email)
-            .IsRequired()
-            .HasMaxLength(100);
+        builder.HasDiscriminator(u => u.Role)
+              .HasValue<PetSitter>(Role.PetSitter)
+              .HasValue<PetOwner>(Role.PetOwner)
+              .HasValue<Admin>(Role.Admin);
 
-        builder.Property(u => u.Password)
-            .IsRequired();
-
-        builder.Property(u => u.PhoneNumber)
-            .HasMaxLength(20);
-
-        builder.Property(u => u.Role)
-            .IsRequired();
-
-        builder.HasOne(u => u.Profile)
-            .WithOne()
-            .HasForeignKey<User>(u => u.Profile.Id);
     }
 }
+    

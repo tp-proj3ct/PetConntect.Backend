@@ -1,15 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using PetConnect.Backend.Core;
+using PetConnect.Backend.Core.Users;
 
 namespace PetConnect.Backend.DataAccess.Cfg;
 
-internal class PetSitterProfileCfg : IEntityTypeConfiguration<PetSitterProfile>
+internal class PetSitterCfg : IEntityTypeConfiguration<PetSitter>
 {
-    public void Configure(EntityTypeBuilder<PetSitterProfile> builder)
+    public void Configure(EntityTypeBuilder<PetSitter> builder)
     {
-        builder.HasKey(psp => psp.Id);
-
         builder.Property(psp => psp.Description)
             .HasMaxLength(2048);
 
@@ -21,13 +19,9 @@ internal class PetSitterProfileCfg : IEntityTypeConfiguration<PetSitterProfile>
             .IsRequired()
             .HasDefaultValue(0);
 
-        builder.HasOne(psp => psp.UserProfile)
-            .WithOne()
-            .HasForeignKey<PetSitterProfile>(psp => psp.UserProfileId);
-
         builder.HasMany(psp => psp.Services)
-            .WithOne(s => s.PetSitterProfile)
-            .HasForeignKey(s => s.PetSitterProfileId);
+            .WithOne(s => s.PetSitter)
+            .HasForeignKey(s => s.PetSitterId);
 
         builder.HasMany(psp => psp.Reviews)
             .WithOne(r => r.Target)

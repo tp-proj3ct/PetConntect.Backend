@@ -17,8 +17,4 @@
     <ProjectReference Include="..\PetConnect.Backend.UseCases\PetConnect.Backend.UseCases.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>

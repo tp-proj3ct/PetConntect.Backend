@@ -12,38 +12,10 @@ internal class PetCfg : IEntityTypeConfiguration<Pet>
     {
         builder.HasKey(p => p.Id);
 
-        builder.Property(p => p.Name)
-            .IsRequired()
-            .HasMaxLength(100);
-
-        builder.Property(p => p.Age)
-            .IsRequired();
-
-        builder.Property(p => p.Weight)
-            .IsRequired();
-
-        builder.Property(p => p.Gender)
-            .IsRequired();
-
-        builder.Property(p => p.Behavior)
-            .HasMaxLength(512);
-
-        builder.Property(p => p.Type)
-            .IsRequired()
-            .HasMaxLength(32);
-
-        builder.Property(p => p.Breed)
-            .HasMaxLength(64);
-
-        builder.Property(p => p.Description)
-            .HasMaxLength(1024);
-
-        builder.Property(p => p.MedicalInfo)
-            .HasMaxLength(512);
-
-        builder.HasOne(p => p.UserProfile)
-            .WithMany(up => up.Pets)
-            .HasForeignKey(p => p.UserProfileId);
+        builder.HasOne(p => p.PetOwner)
+                   .WithMany(po => po.Pets)
+                   .HasForeignKey(p => p.PetOwnerId)
+                   .IsRequired();
 
         builder.Property(p => p.Images)
             .HasConversion(

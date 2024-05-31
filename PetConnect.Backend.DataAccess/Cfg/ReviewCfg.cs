@@ -11,7 +11,7 @@ internal class ReviewCfg : IEntityTypeConfiguration<Review>
         builder.HasKey(r => r.Id);
 
         builder.Property(r => r.Rating)
-            .HasPrecision(3, 2) // Предположим, что Rating имеет две цифры после запятой
+            .HasPrecision(3, 2)
             .IsRequired();
 
         builder.Property(r => r.Comment)

@@ -30,8 +30,8 @@ public class AuthorizeCheckOperationFilter : IOperationFilter
 
             var rolesDescription = string.Join(", ", roles);
 
-            operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
-            operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
+            operation.Responses.Add("401", new OpenApiResponse { Description = "Неавторизован" });
+            operation.Responses.Add("403", new OpenApiResponse { Description = "Отказано в доступе" });
 
             var securityRequirement = new OpenApiSecurityRequirement
             {

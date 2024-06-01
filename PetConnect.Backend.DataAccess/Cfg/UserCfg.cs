@@ -11,8 +11,8 @@ internal class UserCfg : IEntityTypeConfiguration<User>
     {
         builder.HasKey(u => u.Id);
 
-        builder.HasAlternateKey(u => u.Login);
-        builder.HasAlternateKey(u => u.Email);
+        //builder.HasAlternateKey(u => u.Login);
+        //builder.HasAlternateKey(u => u.Email);
 
         builder.HasDiscriminator(u => u.Role)
               .HasValue<PetSitter>(Role.PetSitter)

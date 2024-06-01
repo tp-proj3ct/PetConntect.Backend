@@ -9,6 +9,8 @@ using PetConnect.Packages.UseCases;
 
 namespace PetConnect.Backend.UseCases.Commands.Auth.RegistrationCommand;
 
+using User = PetConnect.Backend.Core.Abstractions.User;
+
 public class RegistrationCommandHandler(IUserRepository userRepository, 
                                         IUserProfileRepository userProfileRepository, 
                                         IOptions<PasswordOptions> passwordOptions) : IRequestHandler<RegistrationCommand, Result<Unit>>

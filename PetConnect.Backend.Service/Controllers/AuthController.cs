@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using PetConnect.Backend.UseCases.Commands.Auth.RegistrationCommand;
 using PetConnect.Backend.UseCases.Commands.Auth.LoginCommand;
 using System;
+using PetConnect.Backend.Core;
 
 namespace PetConnect.Backend.Service.Controllers;
 
@@ -13,6 +14,7 @@ namespace PetConnect.Backend.Service.Controllers;
 /// Контроллер для авторизации
 /// </summary>
 [Route("api/auth")]
+[ApiController]
 [AllowAnonymous]
 public class AuthController(IMediator mediator) : ControllerBase
 {
@@ -24,29 +26,27 @@ public class AuthController(IMediator mediator) : ControllerBase
     /// <summary>
     /// Регистрация
     /// </summary>
+    /// <response code="200"> Успешно </response>
+    /// <response code="400"> Некоретный запрос </response>
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
     [HttpPost("registration")]
     public async Task<IActionResult> Registration(RegistrationCommand request)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         var result = await _mediator.Send(request);
         return result.ToActionResult();
     }
     /// <summary>
     /// Авторизация
     /// </summary>
+    /// <response code="200"> Успешно </response>
     /// <returns> Токен </returns>
+    /// <response code="400"> Некоретный запрос </response>
+    [ProducesResponseType(typeof(Token), 200)]
+    [ProducesResponseType(400)]
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginCommand request)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         var result = await _mediator.Send(request);
         return result.ToActionResult();
     }

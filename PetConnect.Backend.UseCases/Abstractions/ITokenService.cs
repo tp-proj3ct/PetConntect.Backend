@@ -1,8 +1,9 @@
-﻿using PetConnect.Backend.Core.Abstractions;
+﻿using PetConnect.Backend.Core;
+using PetConnect.Backend.Core.Abstractions;
 
 namespace PetConnect.Backend.UseCases.Abstractions;
 
 public interface ITokenService
 {
-    public string GenerateToken(User user);
+    public Token GenerateToken(User user);
 }

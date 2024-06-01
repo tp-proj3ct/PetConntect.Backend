@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PetConnect.Backend.Core.Abstractions;
 using PetConnect.Backend.UseCases.Abstractions;
 
 namespace PetConnect.Backend.DataAccess.Repositories;
+
+using PasswordOptions = Core.Options.PasswordOptions;
 
 public class UserRepository(Context context) : IUserRepository
 {
@@ -37,6 +40,20 @@ public class UserRepository(Context context) : IUserRepository
         return await _context.Users.FirstOrDefaultAsync(u => u.Login == login);
     }
 
+    public async Task ChangeEmail(User user, string email)
+    {
+        user.Email = email;
+        await _context.SaveChangesAsync();
+        
+    }
+
+    public async Task ChangePassword(User user, string password, PasswordOptions passwordOptions)
+    {
+        user.SetPassword(password, passwordOptions); 
+        await _context.SaveChangesAsync();
+        
+    }
+
     public async Task Add(User user)
     {
         await _context.Users.AddAsync(user);
@@ -49,15 +66,11 @@ public class UserRepository(Context context) : IUserRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task Delete(long id)
+    public async Task Delete(User user)
     {
-        var user = await _context.Users.FindAsync(id);
-
-        if (user != null)
-        {
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-        }
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
+        
     }
 
 }

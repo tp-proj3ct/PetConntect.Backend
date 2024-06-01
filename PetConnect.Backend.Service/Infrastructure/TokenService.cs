@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using PetConnect.Backend.Core;
 using PetConnect.Backend.Core.Abstractions;
 using PetConnect.Backend.Core.Options;
 using PetConnect.Backend.UseCases.Abstractions;
@@ -13,7 +14,7 @@ public class TokenService(IOptions<JwtOptions> jwtOptions) : ITokenService
 {
     private readonly JwtOptions _jwtOptions = jwtOptions.Value ?? throw new ArgumentNullException(nameof(jwtOptions));
 
-    public string GenerateToken(User user)
+    public Token GenerateToken(User user)
     {
         var claims = new[]
         {
@@ -32,6 +33,6 @@ public class TokenService(IOptions<JwtOptions> jwtOptions) : ITokenService
             expires: DateTime.Now.AddMinutes(_jwtOptions.ExpiryMinutes),
             signingCredentials: creds);
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        return new Token(new JwtSecurityTokenHandler().WriteToken(token));
     }
 }

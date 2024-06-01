@@ -17,4 +17,8 @@
     <ProjectReference Include="..\PetConnect.Backend.Packages\PetConnect.Packages.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\User\UpdateUserProfilePictureCommand\" />
+  </ItemGroup>
+
 </Project>

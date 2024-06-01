@@ -2,16 +2,21 @@ using PetConnect.Backend.DataAccess;
 using PetConnect.Backend.DataAccess.Repositories;
 using PetConnect.Backend.UseCases.Abstractions;
 using PetConnect.Backend.UseCases.Queries.Users.GetAllUsersQuery;
+using PetConnect.Backend.UseCases.Commands.Auth.RegistrationCommand;
 
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer; 
 using Microsoft.IdentityModel.Tokens;
 using PetConnect.Backend.Infrastructure;
-using Microsoft.AspNetCore.Identity;
 using PetConnect.Backend.Core.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using PetConnect.Backend.Service.SwaggerFilters;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using System.ComponentModel.DataAnnotations;
+using PetConnect.Backend.Core;
 
 namespace PetConnect.Backend.Service;
 
@@ -32,7 +37,6 @@ public static class Program
         var cfg = builder.Configuration;
 
         services.AddControllers();
-        services.AddEndpointsApiExplorer();
 
         services.AddCors(options =>
         {
@@ -58,9 +62,9 @@ public static class Program
                 Type = SecuritySchemeType.ApiKey,
                 Scheme = "Bearer"
             });
-
-            // Добавление атрибута авторизации
             options.OperationFilter<SecurityRequirementsOperationFilter>();
+            options.OperationFilter<AuthorizeCheckOperationFilter>();
+
             var basePath = AppContext.BaseDirectory;
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(basePath, xmlFile);
@@ -81,14 +85,20 @@ public static class Program
         {
             options.UseNpgsql(connectionStrings);
         });
+        // FluentValidation
+        services.AddFluentValidationAutoValidation();
+        services.AddFluentValidationClientsideAdapters();
+        services.AddValidatorsFromAssemblyContaining<RegistrationCommandValidator>();
         // MediatR
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllUsersQuery).Assembly));
         // Dependencies
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+        services.AddScoped<UserAccessor>();
         // Options
         services.Configure<PetConnect.Backend.Core.Options.PasswordOptions>(configuration.GetSection("PasswordOptions"));
         services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+
     }
 
     private static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
@@ -117,7 +127,6 @@ public static class Program
         });
 
         services.AddHttpContextAccessor();
-        services.AddScoped<IUserAccessor, UserAccessor>();
     }
     
     private static void AddAuthorization(IServiceCollection services, IConfiguration _)

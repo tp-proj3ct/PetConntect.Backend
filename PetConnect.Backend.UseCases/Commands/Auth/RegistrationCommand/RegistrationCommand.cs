@@ -5,10 +5,4 @@ using PetConnect.Packages.UseCases;
 
 namespace PetConnect.Backend.UseCases.Commands.Auth.RegistrationCommand;
 
-public class RegistrationCommand : IRequest<Result<Unit>>
-{
-    public string Login { get; set; } = String.Empty;
-    public string Password { get; set; } = String.Empty;
-    public string Email { get; set; } = String.Empty;
-    public Role Role { get; set; }
-}
+public record class RegistrationCommand (string Login, string Password, string Email, string Role) : IRequest<Result<Unit>>;

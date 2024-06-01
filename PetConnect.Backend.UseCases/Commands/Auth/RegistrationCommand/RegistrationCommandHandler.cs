@@ -15,7 +15,7 @@ public class RegistrationCommandHandler(IUserRepository userRepository,
 {
     private readonly IUserRepository _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
     private readonly IUserProfileRepository _userProfileRepository =  userProfileRepository ?? throw new ArgumentException(nameof(userProfileRepository));
-    private readonly PetConnect.Backend.Core.Options.PasswordOptions _passwordOptions = passwordOptions?.Value ?? throw new ArgumentNullException(nameof(passwordOptions));
+    private readonly PasswordOptions _passwordOptions = passwordOptions?.Value ?? throw new ArgumentNullException(nameof(passwordOptions));
 
     public async Task<Result<Unit>> Handle(RegistrationCommand request, CancellationToken cancellationToken)
     {
@@ -31,8 +31,13 @@ public class RegistrationCommandHandler(IUserRepository userRepository,
             return Result<Unit>.Conflict("User with this login already exists!");
         }
 
+        if (!Enum.TryParse<Role>(request.Role, true, out Role parsedRole) || !Enum.IsDefined(typeof(Role), parsedRole))
+        {
+            return Result<Unit>.Invalid("Invalid user role!");
+        }
+
         User user;
-        switch(request.Role)
+        switch(parsedRole)
         {
             case Role.PetSitter:
                 user = new PetSitter { Login = request.Login, Email = request.Email, Role = Role.PetSitter };

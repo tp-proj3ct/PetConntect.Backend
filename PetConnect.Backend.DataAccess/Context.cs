@@ -18,6 +18,7 @@ public class Context : DbContext
     public DbSet<Service> Services { get; set; }
     public DbSet<Review> Reviews { get; set; }
     public DbSet<Booking> Bookings { get; set; }
+    public DbSet<Image> Images { get; set; }
 
 
     public Context(DbContextOptions<Context> option) : base(option)

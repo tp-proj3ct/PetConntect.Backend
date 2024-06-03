@@ -8,8 +8,11 @@ using PetConnect.Backend.UseCases.Commands.User.ChangePasswordCommand;
 using PetConnect.Backend.UseCases.Commands.User.DeleteUserCommand;
 using PetConnect.Backend.UseCases.Commands.UserProfiles;
 using PetConnect.Backend.UseCases.Commands.UserProfiles.UpdateUserProfileCommand;
+using PetConnect.Backend.UseCases.Commands.UserProfiles.UpdateUserProfilePictureCommand;
 using PetConnect.Backend.UseCases.Queries.UserProfiles.GetUserProfileByIdQuery;
+using PetConnect.Backend.UseCases.Queries.UserProfiles.GetUserProfilePictureByIdQuery;
 using PetConnect.Packages.UseCases;
+using System.Net.Mime;
 
 namespace PetConnect.Backend.Service.Controllers;
 
@@ -35,8 +38,10 @@ public class UserController(IMediator mediator, UserAccessor userAccessor) : Con
     /// Получить профиль текущего пользователя
     /// </summary>
     /// <returns></returns>
+    /// <response code="200"> Успешно. Возвращает найденный профиль. </response>
+    /// <response code="400"> Некорректный запрос. </response>
     [HttpGet("profile")]
-    [ProducesResponseType(typeof(IAsyncEnumerable<UserProfile>),200)]
+    [ProducesResponseType(typeof(UserProfile),200)]
     [ProducesResponseType(400)]
     public async Task<IActionResult> GetProfile()
     {
@@ -49,8 +54,8 @@ public class UserController(IMediator mediator, UserAccessor userAccessor) : Con
     /// <summary>
     /// Изменить профиль текущего пользователя
     /// </summary>
-    /// <response code="200"> Успешно без контента </response>
-    /// <response code="400"> Некорректный запрос </response>
+    /// <response code="204"> Успешно без контента. </response>
+    /// <response code="400"> Некорректный запрос. </response>
     [HttpPut("profile")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
@@ -63,30 +68,61 @@ public class UserController(IMediator mediator, UserAccessor userAccessor) : Con
     }
 
     /// <summary>
-    /// Изменить картинку профиля текущего пользователя
+    /// Получить картинку профиля текущего пользователя
     /// </summary>
-    /// <response code="204"> Успешно без контента </response>
-    /// <response code="400"> Некорректный запрос </response>
-    [HttpPut("profile/picture")]
-    [ProducesResponseType(204)]
-    [ProducesResponseType(400)]
-    public async Task<IActionResult> UpdateProfilePicture()
+    /// <response code="200"> Успешно. Возвращает картинку профиля. </response>
+    /// <response code="404"> Пользователь или картинка не найдены. </response>
+    [HttpGet("profile/picture")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
+    public async Task<IActionResult> GetProfilePicture()
     {
         long userId = _userAccessor.GetUserId();
 
-        throw new NotImplementedException();
+        var result = await _mediator.Send(new GetUserProfilePictureByIdQuery(userId));
+
+        if (result.IsSuccess)
+        {
+            return File(result.GetValue(), "image/jpeg");
+        }
+
+        return result.ToActionResult();
     }
+
+    /// <summary>
+    /// Изменить картинку профиля текущего пользователя
+    /// </summary>
+    /// <param name="picture"> Новая картинка профиля</param>
+    /// <response code="204"> Успешно без контента. </response>
+    /// <response code="400"> Некорректный запрос. </response>
+    /// <response code="415"> Неподдерживаемый тип медиа. </response>
+    [HttpPost("profile/picture")]
+    [Consumes("image/jpeg", "image/png", "image/jpg")]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(415)]
+    public async Task<IActionResult> UpdateProfilePicture(IFormFile picture)
+    {
+        long userId = _userAccessor.GetUserId();
+
+        if (!picture.ContentType.Equals("image/jpeg") || !picture.ContentType.Equals("image/png")) return StatusCode(415);
+
+        var result = await _mediator.Send(new UpdateUserProfilePictureCommand(userId, picture));
+
+        return result.ToActionResult();
+    }
+
 
     /// <summary>
     /// Изменить почту текущего пользователя
     /// </summary>
-    /// <response code="204"> Успешно без контента </response>
-    /// <response code="400"> Некорректный запрос </response>
+    /// <response code="204"> Успешно без контента. </response>
+    /// <response code="400"> Некорректный запрос. </response>
     /// <param name="email"> Измененная почта</param>
-    [HttpPut("/email")]
+    [HttpPost("/change-email")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
-        public async Task<IActionResult> ChangeEmail(string email )
+    public async Task<IActionResult> ChangeEmail(string email )
         {
             long userId = _userAccessor.GetUserId();
 
@@ -94,16 +130,16 @@ public class UserController(IMediator mediator, UserAccessor userAccessor) : Con
             return result.ToActionResult();
         }
 
-        /// <summary>
-        /// Изменить пароль текущего пользователя
-        /// </summary>
-        /// <response code="204"> Успешно без контента </response>
-        /// <response code="400"> Некорректный запрос </response>
-        /// <param name="password"> Измененный пароль</param>
-        [HttpPut("/password")]
-        [ProducesResponseType(204)]
-        [ProducesResponseType(400)]
-        public async Task<IActionResult> ChangePassword(string password)
+    /// <summary>
+    /// Изменить пароль текущего пользователя
+    /// </summary>
+    /// <response code="204"> Успешно без контента.</response>
+    /// <response code="400"> Некорректный запрос. </response>
+    /// <param name="password"> Измененный пароль</param>
+    [HttpPost("/change-password")]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> ChangePassword(string password)
         {
             long userId = _userAccessor.GetUserId();
 
@@ -114,8 +150,8 @@ public class UserController(IMediator mediator, UserAccessor userAccessor) : Con
     /// <summary>
     /// Удалить текущего пользователя
     /// </summary>
-    /// <response code="204"> Успешно без контента </response>
-    /// <response code="400"> Некорректный запрос </response>
+    /// <response code="204"> Успешно без контента. </response>
+    /// <response code="400"> Некорректный запрос. </response>
     [HttpDelete("")]
     public async Task<IActionResult> DeleteUser()
     {

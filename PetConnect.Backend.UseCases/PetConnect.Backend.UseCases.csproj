@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\User\UpdateUserProfilePictureCommand\" />
+    <Folder Include="Queries\Pets\" />
   </ItemGroup>
 
 </Project>

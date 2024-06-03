@@ -44,7 +44,7 @@ public class AuthorizeCheckOperationFilter : IOperationFilter
                             Id = "Bearer"
                         }
                     },
-                    new string[] { }
+                    Array.Empty<string>()
                 }
             };
 

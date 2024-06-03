@@ -74,7 +74,7 @@ public class UserController(IMediator mediator, UserAccessor userAccessor) : Con
     /// <response code="404"> Пользователь или картинка не найдены. </response>
     [HttpGet("profile/picture")]
     [ProducesResponseType(200)]
-    [ProducesResponseType(404)]
+    [ProducesResponseType(400)]
     public async Task<IActionResult> GetProfilePicture()
     {
         long userId = _userAccessor.GetUserId();
@@ -93,21 +93,29 @@ public class UserController(IMediator mediator, UserAccessor userAccessor) : Con
     /// Изменить картинку профиля текущего пользователя
     /// </summary>
     /// <param name="picture"> Новая картинка профиля</param>
-    /// <response code="204"> Успешно без контента. </response>
+    /// <response code="201"> Успешно. Возвращает картинку. </response>
     /// <response code="400"> Некорректный запрос. </response>
     /// <response code="415"> Неподдерживаемый тип медиа. </response>
     [HttpPost("profile/picture")]
-    [Consumes("image/jpeg", "image/png", "image/jpg")]
-    [ProducesResponseType(204)]
+    [Consumes("multipart/form-data")]
+    [ProducesResponseType(201)]
     [ProducesResponseType(400)]
     [ProducesResponseType(415)]
     public async Task<IActionResult> UpdateProfilePicture(IFormFile picture)
     {
         long userId = _userAccessor.GetUserId();
 
-        if (!picture.ContentType.Equals("image/jpeg") || !picture.ContentType.Equals("image/png")) return StatusCode(415);
+        if (picture.ContentType is not "image/jpeg" && picture.ContentType is not "image/png" && picture.ContentType is not "image/jpg")
+        {
+            return StatusCode(415, "Unsupported media type.");
+        }
 
         var result = await _mediator.Send(new UpdateUserProfilePictureCommand(userId, picture));
+
+        if (result.IsSuccess)
+        {
+            return File(result.GetValue(), "image/jpeg");
+        }
 
         return result.ToActionResult();
     }

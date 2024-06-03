@@ -30,26 +30,59 @@ public class AdminController(IMediator mediator) : ControllerBase
         return _mediator.CreateStream(new GetAllUsersQuery());
     }
 
+    /// <summary>
+    /// Получить пользователя по ID
+    /// </summary>
+    /// <param name="id"> Уникальный индетификатор пользователя</param>
+    /// <returns> Юзера </returns>
+    /// <response code="200"> Пользователь найден. </response>
+    /// <response code="400"> Некорректный запрос </response> 
     [HttpGet("users/{id}")]
-    public Task<IActionResult> GetUserById()
+    [ProducesResponseType(typeof(User),200)]
+    [ProducesResponseType(400)]
+    public Task<IActionResult> GetUserById(long id)
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///  Активировать пользователя по ID
+    /// </summary>
+    /// <param name="id"> Уникальный индетификатор пользователя </param>
+    /// <response code="204"> Пользователь успешно активирован. </response>
+    /// <response code="400"> Некорректный запрос </response>
     [HttpPost("users/{id}/activate")]
-    public Task<IActionResult> ActivateUser()
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    public Task<IActionResult> ActivateUser(long id)
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Деактивирировать пользователя по ID
+    /// </summary>
+    /// <param name="id"> Уникальный индетификатор пользователя </param>
+    /// <response code="204"> Пользователь успешно деактивирован. </response>
+    /// <response code="400"> Некорректный запрос </response>
     [HttpPost("users/{id}/deactivate")]
-    public Task<IActionResult> DeactivateUser()
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    public Task<IActionResult> DeactivateUser(long id)
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Заблокировать пользователя по ID
+    /// </summary>
+    /// <param name="id"> Уникальный индетификатор пользователя </param>
+    /// <response code="204"> Пользователь успешно заблокирован. </response>
+    /// <response code="400"> Некорректный запрос </response>
     [HttpPost("users/{id}/block")]
-    public Task<IActionResult> BlockUser()
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    public Task<IActionResult> BlockUser(long id)
     {
         throw new NotImplementedException();
     }
@@ -63,8 +96,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     /// Получить все бронирования. 
     /// </summary>
     /// <returns> Массив из бронирований </returns>
+    /// <response code="200"></response>
+    /// <response code="400">Некорректный запрос.</response>
     [HttpGet("booking")]
     [ProducesResponseType(typeof(IAsyncEnumerable<Booking>), 200)]
+    [ProducesResponseType(400)]
     public IAsyncEnumerable<Booking> GetAllBookings()
     {
         throw new NotImplementedException();
@@ -78,8 +114,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     /// Получить всех питомцев. 
     /// </summary>
     /// <returns> Массив из питомцев </returns>
+    /// <response code="200"></response>
+    /// <response code="400">Некорректный запрос.</response>
     [HttpGet("pets")]
     [ProducesResponseType(typeof(IAsyncEnumerable<Pet>), 200)]
+    [ProducesResponseType(400)]
     public IAsyncEnumerable<Pet> GetAllPets()
     {
         throw new NotImplementedException();
@@ -104,10 +143,11 @@ public class AdminController(IMediator mediator) : ControllerBase
 
     #region Services
     /// <summary>
-    /// Получить все услуги
+    /// Получить все отзывы
     /// </summary>
-    /// <returns> Массив из услуг </returns>
-    /// <exception cref="NotImplementedException"></exception>
+    /// <returns> Массив из отзывов </returns>
+    /// <response code="200"></response>
+    /// <response code="400">Некорректный запрос.</response>
     [HttpGet("services")]
     [ProducesResponseType(typeof(IAsyncEnumerable<Service>), 200)]
     public IAsyncEnumerable<Service> GetAllServices()
@@ -119,8 +159,15 @@ public class AdminController(IMediator mediator) : ControllerBase
 
     #region Reviews
 
+    /// <summary>
+    /// Получить все отзывы
+    /// </summary>
+    /// <returns> Массив из отзывов </returns>
+    /// <response code="200"></response>
+    /// <response code="400">Некорректный запрос.</response>
     [HttpGet("reviews")]
     [ProducesResponseType(typeof(IAsyncEnumerable<Review>), 200)]
+    [ProducesResponseType(400)]
     public IAsyncEnumerable<Review> GetAllReviews()
     {
         throw new NotImplementedException();

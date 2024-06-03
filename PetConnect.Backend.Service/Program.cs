@@ -15,8 +15,7 @@ using System.Reflection;
 using PetConnect.Backend.Service.SwaggerFilters;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using System.ComponentModel.DataAnnotations;
-using PetConnect.Backend.Core;
+using PetConnect.Backend.UseCases;
 
 namespace PetConnect.Backend.Service;
 
@@ -48,8 +47,11 @@ public static class Program
             });
         });
 
+        var env = builder.Environment;
+        services.AddSingleton(env);
+
         AddAuthentication(builder.Services, builder.Configuration);
-        AddAuthorization(builder.Services, builder.Configuration);
+        AddAuthorization(builder.Services);
 
         services.AddHealthChecks();
         services.AddSwaggerGen(options =>
@@ -71,7 +73,7 @@ public static class Program
             options.IncludeXmlComments(xmlPath);
         });
 
-
+        
         ConfigureDI(services, cfg);
          
         return builder;
@@ -91,17 +93,19 @@ public static class Program
         services.AddValidatorsFromAssemblyContaining<RegistrationCommandValidator>();
         // MediatR
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllUsersQuery).Assembly));
+        // AutoMapper
+        services.AddAutoMapper(cfg => cfg.AddProfile(typeof(MappingProfile)));
         // Dependencies
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+        services.AddScoped<IPetRepository, PetRepository>();
         services.AddScoped<UserAccessor>();
         // Options
         services.Configure<PetConnect.Backend.Core.Options.PasswordOptions>(configuration.GetSection("PasswordOptions"));
         services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
-
     }
 
-    private static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
+    private static void AddAuthentication(IServiceCollection services, ConfigurationManager configuration)
     {
         var jwtConfig = configuration.GetSection("Jwt");
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig["Key"]));
@@ -129,7 +133,7 @@ public static class Program
         services.AddHttpContextAccessor();
     }
     
-    private static void AddAuthorization(IServiceCollection services, IConfiguration _)
+    private static void AddAuthorization(IServiceCollection services)
     {
         services.AddAuthorizationBuilder()
             .AddPolicy("AdminPolicy", policy =>

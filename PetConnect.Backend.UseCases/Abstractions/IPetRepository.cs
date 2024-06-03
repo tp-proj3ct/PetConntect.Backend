@@ -4,13 +4,15 @@ namespace PetConnect.Backend.UseCases.Abstractions;
 
 public interface IPetRepository
 {
-    Task<IEnumerable<Pet>> GetAll(long id);
+    IAsyncEnumerable<Pet> GetAll();
 
-    Task<IEnumerable<Pet>> GetAllById(long id);
+    IAsyncEnumerable<Pet> GetAllByUserId(long userId);
+
+    Task<Pet?> GetById(long petId);
 
     Task Add(Pet pet);
 
     Task Update(Pet pet);
 
-    Task Delete(long id);
+    Task Delete(Pet pet);
 }

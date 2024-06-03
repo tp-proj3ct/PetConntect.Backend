@@ -10,10 +10,19 @@ using PetConnect.Backend.UseCases.Abstractions;
 
 namespace PetConnect.Backend.Infrastructure;
 
+/// <summary>
+/// Сервис для взаимодействия с ткеном
+/// </summary>
+/// <param name="jwtOptions"></param>
 public class TokenService(IOptions<JwtOptions> jwtOptions) : ITokenService
 {
     private readonly JwtOptions _jwtOptions = jwtOptions.Value ?? throw new ArgumentNullException(nameof(jwtOptions));
 
+    /// <summary>
+    /// Сгенерировать токен
+    /// </summary>
+    /// <param name="user"> Пользователь для генерации токена</param>
+    /// <returns></returns>
     public Token GenerateToken(User user)
     {
         var claims = new[]

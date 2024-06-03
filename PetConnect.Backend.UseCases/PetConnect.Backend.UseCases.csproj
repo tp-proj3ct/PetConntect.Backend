@@ -7,18 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation" Version="11.9.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PetConnect.Backend.Contracts\PetConnect.Backend.Contracts.csproj" />
     <ProjectReference Include="..\PetConnect.Backend.Core\PetConnect.Backend.Core.csproj" />
     <ProjectReference Include="..\PetConnect.Backend.Packages\PetConnect.Packages.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Queries\Pets\" />
   </ItemGroup>
 
 </Project>

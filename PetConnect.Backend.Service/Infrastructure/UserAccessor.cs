@@ -7,17 +7,12 @@ namespace PetConnect.Backend.Infrastructure;
 /// <summary>
 /// Сервис для доступа к данным пользователя.
 /// </summary>
-public class UserAccessor : IUserAccessor
+public class UserAccessor(IHttpContextAccessor httpContextAccessor) : IUserAccessor
 {
     /// <summary>
     /// Авторизированный пользователь.
     /// </summary>
-    private readonly ClaimsPrincipal _user;
-
-    public UserAccessor(IHttpContextAccessor httpContextAccessor)
-    {
-        _user = httpContextAccessor.HttpContext?.User ?? throw new ArgumentNullException(nameof(httpContextAccessor));
-    }
+    private readonly ClaimsPrincipal _user = httpContextAccessor.HttpContext?.User ?? throw new ArgumentNullException(nameof(httpContextAccessor));
 
     /// <summary>
     /// Получить идентификатор пользователя.

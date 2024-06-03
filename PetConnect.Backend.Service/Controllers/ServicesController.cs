@@ -1,9 +1,18 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PetConnect.Backend.Contracts;
 using PetConnect.Backend.Core;
+using PetConnect.Backend.Core.Abstractions;
 using PetConnect.Backend.Infrastructure;
 using PetConnect.Backend.UseCases.Commands.Pets;
+using PetConnect.Backend.UseCases.Commands.Services;
+using PetConnect.Backend.UseCases.Commands.Services.AddServiceCommand;
+using PetConnect.Backend.UseCases.Commands.Services.UpdateServiceCommand;
+using PetConnect.Backend.UseCases.Commands.User.DeleteUserCommand;
+using PetConnect.Backend.UseCases.Queries.Services.GetAllServicesQuery;
+using PetConnect.Backend.UseCases.Queries.Services.GetServiceByIdQuery;
+using PetConnect.Packages.UseCases;
 
 namespace PetConnect.Backend.Service.Controllers;
 
@@ -31,14 +40,30 @@ public class ServicesController(IMediator mediator, UserAccessor userAccessor) :
     /// <returns> Массив из питомцев </returns>
     /// <response code="200"></response>
     /// <response code="400">Некорректный запрос.</response>
-    [ProducesResponseType(typeof(IAsyncEnumerable<Pet>), 200)]
+    [ProducesResponseType(typeof(IAsyncEnumerable<ServiceOutputModel>), 200)]
     [ProducesResponseType(400)]
     [HttpGet]
-    public async Task<IActionResult> GetAllUserServices()
+    public IAsyncEnumerable<ServiceOutputModel> GetAllUserServices()
     {
         long userId = _userAccessor.GetUserId();
 
-        throw new NotImplementedException();
+        return _mediator.CreateStream(new GetAllServicesByUserIdQuery(userId));
+    }
+
+    /// <summary>
+    /// Получить услугу по ID
+    /// </summary>
+    /// <param name="id"> Уникальный индетификатор услуги</param>
+    /// <returns> Модель найденной услуги </returns>
+    /// <response code="200"> Услуга найдена.</response>
+    /// <response code="400">Некорректный запрос.</response>
+    [ProducesResponseType(typeof(ServiceOutputModel), 200)]
+    [ProducesResponseType(400)]
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetServiceById(long id)
+    {
+        var result = await _mediator.Send(new GetServiceByIdQuery(id));
+        return result.ToActionResult();
     }
 
     /// <summary>
@@ -51,57 +76,43 @@ public class ServicesController(IMediator mediator, UserAccessor userAccessor) :
     [ProducesResponseType(typeof(Pet), 201)]
     [ProducesResponseType(400)]
     [HttpPost]
-    public async Task<IActionResult> CreateUserService([FromBody] PetInputModel model)
+    public async Task<IActionResult> CreateUserService([FromBody] ServiceInputModel model)
     {
         long userId = _userAccessor.GetUserId();
 
-        throw new NotImplementedException();
+        var result = await _mediator.Send(new AddServiceCommand(userId, model));
+        return result.ToActionResult();
 
-    }
-
-    /// <summary>
-    /// Получить услугу по ID
-    /// </summary>
-    /// <param name="serviceId"> Уникальный индетификатор услуги</param>
-    /// <returns> Модель найденной услуги </returns>
-    /// <response code="200"> Услуга найдена.</response>
-    /// <response code="400">Некорректный запрос.</response>
-    [ProducesResponseType(typeof(Pet), 200)]
-    [ProducesResponseType(400)]
-    [HttpGet("{serviceId}")]
-    public async Task<IActionResult> GetServiceById(long serviceId)
-    {
-
-        throw new NotImplementedException();
     }
 
     /// <summary>
     /// Изменить услугу по ID
     /// </summary>
-    /// <param name="serviceId"> Уникальный индетификатор услуги</param>
+    /// <param name="id"> Уникальный индетификатор услуги</param>
     /// <param name="model"> Входная модель услуги</param>
     /// <response code="204">Услуга успешно отредактирована.</response>
     /// <response code="400">Некорректный запрос.</response>
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
-    [HttpPut("{serviceId}")]
-    public async Task<IActionResult> EditServiceById(long serviceId, [FromBody] PetInputModel model)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> EditServiceById(long id, [FromBody] ServiceInputModel model)
     {
-
-        throw new NotImplementedException();
+        var result = await _mediator.Send(new UpdateServiceCommand(id, model));
+        return result.ToActionResult();
     }
 
     /// <summary>
     /// Удалить услугу по ID
     /// </summary>
-    /// <param name="serviceId">Уникальный индетификатор услуги</param>
+    /// <param name="id">Уникальный индетификатор услуги</param>
     /// <response code="204">Услуга успешно удалена.</response>
     /// <response code="400">Некорректный запрос.</response>
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
-    [HttpDelete("{serviceId}")]
-    public async Task<IActionResult> DeleteServiceById(long serviceId)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteServiceById(long id)
     {
-        throw new NotImplementedException();
+        var result = await _mediator.Send(new DeleteUserCommand(id));
+        return result.ToActionResult();
     }
 }

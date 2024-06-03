@@ -26,7 +26,7 @@ namespace PetConnect.Backend.Service.Controllers;
 [Authorize(Roles = "PetOwner")]
 [Route("api/pets")]
 [ApiController]
-public class PetController(IMediator mediator, UserAccessor userAccessor) : ControllerBase
+public class PetsController(IMediator mediator, UserAccessor userAccessor) : ControllerBase
 {
     /// <summary>
     /// Посредник

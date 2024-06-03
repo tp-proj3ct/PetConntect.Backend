@@ -22,7 +22,7 @@ namespace PetConnect.Backend.Service.Controllers;
 [Authorize(Roles = "PetSitter, PetOwner, Admin")]
 [Route("api/user")]
 [ApiController]
-public class UserController(IMediator mediator, UserAccessor userAccessor) : ControllerBase
+public class UsersController(IMediator mediator, UserAccessor userAccessor) : ControllerBase
 {
     /// <summary>
     /// Посредник

@@ -1,5 +1,7 @@
 ﻿namespace PetConnect.Backend.UseCases.Commands.Reviews;
 
-internal class ReviewInputModel
+public class ReviewInputModel
 {
+    public double Rating { get; set; }
+    public string Comment { get; set; } 
 }

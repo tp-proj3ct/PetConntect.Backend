@@ -11,3 +11,4 @@ public class PetSitter : User
     public ICollection<Service> Services { get; set; }
     public ICollection<Review> Reviews { get; set; }
 }
+    

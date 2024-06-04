@@ -1,10 +1,7 @@
-﻿using PetConnect.Backend.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using PetConnect.Backend.Core;
 using PetConnect.Backend.UseCases.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PetConnect.Backend.DataAccess.Repositories;
 
@@ -16,4 +13,15 @@ public class ReviewRepository(Context context) : IReviewRepository
     {
         return _context.Reviews.AsAsyncEnumerable();
     }
+
+    public IAsyncEnumerable<Review> GetAllByPetSitterId(long petSitterId)
+    {
+        return _context.Reviews.Where(r => r.TargetId == petSitterId).AsAsyncEnumerable();
+    }
+
+    public IAsyncEnumerable<Review> GetAllByPetOwnerId(long petOwnerId)
+    {
+        return _context.Reviews.Where(r => r.ReviewerId == petOwnerId).AsAsyncEnumerable();
+    }
+
 }

@@ -1,8 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PetConnect.Backend.Contracts;
 using PetConnect.Backend.Core;
 using PetConnect.Backend.Core.Abstractions;
+using PetConnect.Backend.UseCases.Queries.Services.GetAllServicesQuery;
 using PetConnect.Backend.UseCases.Queries.Users.GetAllUsersQuery;
 
 namespace PetConnect.Backend.Service.Controllers;
@@ -149,10 +151,10 @@ public class AdminController(IMediator mediator) : ControllerBase
     /// <response code="200"></response>
     /// <response code="400">Некорректный запрос.</response>
     [HttpGet("services")]
-    [ProducesResponseType(typeof(IAsyncEnumerable<Service>), 200)]
+    [ProducesResponseType(typeof(IAsyncEnumerable<ServiceOutputModel>), 200)]
     public IAsyncEnumerable<Service> GetAllServices()
     {
-        throw new NotImplementedException();
+        return _mediator.CreateStream(new GetAllServicesQuery());
     }
 
     #endregion

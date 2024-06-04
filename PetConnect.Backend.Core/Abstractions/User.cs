@@ -19,6 +19,7 @@ public abstract class User
 
     public bool IsBlocked { get; set; } = false;
 
+
     public void SetPassword(string password, PasswordOptions passwordOptions)
     {
         PasswordHash = CryptographyService.HashPassword(password, passwordOptions.Salt);

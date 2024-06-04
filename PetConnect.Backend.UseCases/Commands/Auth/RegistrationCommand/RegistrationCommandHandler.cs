@@ -38,7 +38,7 @@ public class RegistrationCommandHandler(IUserRepository userRepository,
             return Result<Unit>.Invalid("Invalid user role!");
         }
 
-        User user;
+        User user;  
         switch(parsedRole)
         {
             case Role.PetSitter:

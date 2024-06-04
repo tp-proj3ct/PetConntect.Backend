@@ -101,6 +101,7 @@ public static class Program
         services.AddScoped<IPetRepository, PetRepository>();
         services.AddScoped<IServiceRepository, ServiceRepository>();
         services.AddScoped<IReviewRepository,  ReviewRepository>();
+        services.AddScoped<IPetSitterRepository, PetSitterRepository>();
         services.AddScoped<UserAccessor>();
         // Options
         services.Configure<PetConnect.Backend.Core.Options.PasswordOptions>(configuration.GetSection("PasswordOptions"));

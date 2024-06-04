@@ -73,7 +73,7 @@ public class ServicesController(IMediator mediator, UserAccessor userAccessor) :
     /// <returns> Модель созданной услуги </returns>
     /// <response code="201">Услуга успешно создана.</response>
     /// <response code="400">Некорректный запрос.</response>
-    [ProducesResponseType(typeof(Pet), 201)]
+    [ProducesResponseType(typeof(ServiceOutputModel), 201)]
     [ProducesResponseType(400)]
     [HttpPost]
     public async Task<IActionResult> CreateUserService([FromBody] ServiceInputModel model)

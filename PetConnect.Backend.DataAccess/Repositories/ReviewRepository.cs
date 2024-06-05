@@ -24,4 +24,9 @@ public class ReviewRepository(Context context) : IReviewRepository
         return _context.Reviews.Where(r => r.ReviewerId == petOwnerId).AsAsyncEnumerable();
     }
 
+    public async Task Add(Review review)
+    {
+        await _context.Reviews.AddAsync(review);
+        await _context.SaveChangesAsync();
+    }
 }

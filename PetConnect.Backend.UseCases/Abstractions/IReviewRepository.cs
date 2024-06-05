@@ -10,4 +10,6 @@ public interface IReviewRepository
 
     IAsyncEnumerable<Review> GetAllByPetSitterId(long petSitterId);
 
+    Task Add(Review review);
+
 }

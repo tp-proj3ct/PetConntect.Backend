@@ -1,17 +1,18 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+using PetConnect.Packages;
 using PetConnect.Backend.Contracts;
-using PetConnect.Backend.Core;
-using PetConnect.Backend.Core.Abstractions;
 using PetConnect.Backend.Infrastructure;
 using PetConnect.Backend.UseCases.Commands.Reviews;
-using PetConnect.Backend.UseCases.Queries.Pets.GetAllPetsByUserIdQuery;
+using PetConnect.Backend.UseCases.Commands.Reviews.AddReviewCommand;
 using PetConnect.Backend.UseCases.Queries.PetSitters.GetAllPetSittersQuery;
 using PetConnect.Backend.UseCases.Queries.PetSitters.GetPetSitterByIdQuery;
 using PetConnect.Backend.UseCases.Queries.Reviews.GetAllReviewsByPetSitterIdQuery;
 using PetConnect.Backend.UseCases.Queries.Services.GetAllServicesQuery;
 using PetConnect.Packages.UseCases;
+using PetConnect.Backend.UseCases.Commands.Pets.UpdatePetCommand;
 
 namespace PetConnect.Backend.Service.Controllers;
 
@@ -99,10 +100,11 @@ public class PetSittersController(IMediator mediator, UserAccessor userAccessor)
     [HttpPost("{id}/reviews")]
     [ProducesResponseType(typeof(ReviewOutputModel), 201)]
     [ProducesResponseType(400)]
-    public Task<IActionResult> AddReview(ReviewInputModel model, long id)
+    public async Task<IActionResult> AddReview(ReviewInputModel model, long id)
     {
         long userId = userAccessor.GetUserId();
 
-        throw new NotImplementedException();
+        var result = await _mediator.Send(new AddReviewCommand(userId, id, model));
+        return result.ToActionResult();
     }
 }

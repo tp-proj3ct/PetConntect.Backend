@@ -36,7 +36,6 @@ public class ReviewsController(IMediator mediator, UserAccessor userAccessor) : 
     /// </summary>
     /// <response code="200"> Отзывы найдены. Возвращает отызывы. </response>
     /// <response code="400">Некорректный запрос.</response>
-    [Authorize(Roles = "PetSitter, PetOwner")]
     [ProducesResponseType(typeof(IAsyncEnumerable<ReviewOutputModel>), 200)]
     [ProducesResponseType(400)]
     [HttpGet]

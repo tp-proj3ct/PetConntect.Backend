@@ -11,7 +11,7 @@ using PetConnect.Backend.Core;
 namespace PetConnect.Backend.Service.Controllers;
 
 /// <summary>
-/// Контроллер для авторизации
+/// Контроллер для аунтефикации
 /// </summary>
 [Route("api/auth")]
 [ApiController]

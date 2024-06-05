@@ -19,5 +19,10 @@ internal class ServiceCfg : IEntityTypeConfiguration<Service>
 
         builder.Property(s => s.Price)
             .IsRequired();
+
+        builder.HasOne(s => s.PetSitter)
+           .WithMany(p => p.Services)
+           .HasForeignKey(s => s.PetSitterId)
+           .OnDelete(DeleteBehavior.Cascade); 
     }
 }

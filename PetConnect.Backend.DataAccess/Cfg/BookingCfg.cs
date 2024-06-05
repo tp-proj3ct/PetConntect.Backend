@@ -57,5 +57,9 @@ internal class BookingCfg : IEntityTypeConfiguration<Booking>
                             .WithMany()
                             .HasForeignKey(bp => bp.BookingId); 
                     });
+
+        builder.HasOne(b => b.Payment)
+           .WithOne(p => p.Booking)
+           .HasForeignKey<Payment>(p => p.BookingId);
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
-
 using PetConnect.Backend.Core;
 
 namespace PetConnect.Backend.DataAccess.Cfg;

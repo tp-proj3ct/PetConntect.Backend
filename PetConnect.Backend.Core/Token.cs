@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace PetConnect.Backend.Core;
 
-namespace PetConnect.Backend.Core;
 /// <summary>
 /// Модель токена
 /// </summary>

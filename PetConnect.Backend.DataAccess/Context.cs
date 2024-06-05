@@ -20,6 +20,7 @@ public class Context : DbContext
     public DbSet<Service> Services { get; set; }
     public DbSet<Review> Reviews { get; set; }
     public DbSet<Booking> Bookings { get; set; }
+    public DbSet<Payment> Payments { get; set; }
 
     private readonly bool _isDevelopment;
 
@@ -47,5 +48,6 @@ public class Context : DbContext
         modelBuilder.ApplyConfiguration(new ServiceCfg());
         modelBuilder.ApplyConfiguration(new ReviewCfg());
         modelBuilder.ApplyConfiguration(new BookingCfg());
+        modelBuilder.ApplyConfiguration(new PaymentCfg());
     }
 }

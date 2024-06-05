@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-using PetConnect.Packages;
 using PetConnect.Backend.Contracts;
 using PetConnect.Backend.Infrastructure;
 using PetConnect.Backend.UseCases.Commands.Reviews;
@@ -12,12 +11,12 @@ using PetConnect.Backend.UseCases.Queries.PetSitters.GetPetSitterByIdQuery;
 using PetConnect.Backend.UseCases.Queries.Reviews.GetAllReviewsByPetSitterIdQuery;
 using PetConnect.Backend.UseCases.Queries.Services.GetAllServicesQuery;
 using PetConnect.Packages.UseCases;
-using PetConnect.Backend.UseCases.Commands.Pets.UpdatePetCommand;
 
 namespace PetConnect.Backend.Service.Controllers;
 
-using Service = Core.Service;
-
+/// <summary>
+/// Контроллер для взаимодействия с сиделками
+/// </summary>
 [Route("api/pet-sitters")]
 [AllowAnonymous]
 [ApiController]
@@ -102,7 +101,7 @@ public class PetSittersController(IMediator mediator, UserAccessor userAccessor)
     [ProducesResponseType(400)]
     public async Task<IActionResult> AddReview(ReviewInputModel model, long id)
     {
-        long userId = userAccessor.GetUserId();
+        long userId = _userAccessor.GetUserId();
 
         var result = await _mediator.Send(new AddReviewCommand(userId, id, model));
         return result.ToActionResult();

@@ -19,8 +19,4 @@
     <ProjectReference Include="..\PetConnect.Backend.Packages\PetConnect.Packages.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Queries\Bookings\" />
-  </ItemGroup>
-
 </Project>

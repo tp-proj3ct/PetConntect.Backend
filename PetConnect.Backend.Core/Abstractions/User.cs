@@ -1,5 +1,5 @@
-﻿using PetConnect.Backend.Core.Services;
-using PetConnect.Backend.Core.Options;
+﻿using PetConnect.Backend.Core.Options;
+using PetConnect.Backend.Core.Services;
 
 namespace PetConnect.Backend.Core.Abstractions;
 

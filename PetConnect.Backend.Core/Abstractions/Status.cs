@@ -2,8 +2,10 @@
 
 public enum Status
 {
-    Pending,
-    Confirmed,
+    PendingConfirmation,
+    PendingPayment,
+    PendingAssignment,
+    InProgress,
     Completed,
     Cancelled
 }

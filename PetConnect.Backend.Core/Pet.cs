@@ -1,5 +1,4 @@
 ﻿using PetConnect.Backend.Core.Abstractions;
-using PetConnect.Backend.Core.Users;
 
 namespace PetConnect.Backend.Core;
 

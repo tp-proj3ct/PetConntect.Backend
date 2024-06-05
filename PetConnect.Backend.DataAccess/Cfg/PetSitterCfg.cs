@@ -19,9 +19,10 @@ internal class PetSitterCfg : IEntityTypeConfiguration<PetSitter>
             .IsRequired()
             .HasDefaultValue(0);
 
-        builder.HasMany(psp => psp.Services)
-            .WithOne()
-            .HasForeignKey(s => s.PetSitterId);
+        builder.HasMany(p => p.Services)
+            .WithOne(s => s.PetSitter)
+            .HasForeignKey(s => s.PetSitterId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(psp => psp.Reviews)
             .WithOne(r => r.Target)

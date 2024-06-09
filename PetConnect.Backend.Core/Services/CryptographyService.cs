@@ -3,6 +3,9 @@ using System.Security.Cryptography;
 
 namespace PetConnect.Backend.Core.Services;
 
+/// <summary>
+/// Сервис криптографии
+/// </summary>
 public static class CryptographyService
 {
     /// <summary>

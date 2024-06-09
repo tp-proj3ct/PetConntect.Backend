@@ -1,26 +1,35 @@
-    using PetConnect.Backend.DataAccess;
+using PetConnect.Backend.DataAccess;
 using PetConnect.Backend.DataAccess.Repositories;
+
+using PetConnect.Backend.UseCases;
 using PetConnect.Backend.UseCases.Abstractions;
 using PetConnect.Backend.UseCases.Queries.Users.GetAllUsersQuery;
 using PetConnect.Backend.UseCases.Commands.Auth.RegistrationCommand;
+
+using PetConnect.Backend.Service.SwaggerFilters;
+using PetConnect.Backend.Infrastructure;
+using PetConnect.Backend.Core.Options;
 
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer; 
 using Microsoft.IdentityModel.Tokens;
-using PetConnect.Backend.Infrastructure;
-using PetConnect.Backend.Core.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using PetConnect.Backend.Service.SwaggerFilters;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using PetConnect.Backend.UseCases;
 
 namespace PetConnect.Backend.Service;
 
+/// <summary>
+/// Программа
+/// </summary>
 public static class Program
 {
+    /// <summary>
+    /// Входная точка
+    /// </summary>
+    /// <param name="args"> Аргументы при запуске </param>
     public static async Task Main(string[] args)
     {
         var builder = ConfigureApp(args);
@@ -159,7 +168,7 @@ public static class Program
     private static async Task RunApp(WebApplicationBuilder builder)
     {
         var app = builder.Build();
-        var appName = builder.Configuration["ServiceName"]?? throw new ArgumentNullException("ServiceName", "ServiceName is not provided");
+        var appName = builder.Configuration["ServiceName"]?? throw new ArgumentNullException(builder.Configuration["ServiceName"], "ServiceName is not provided");
 
         if (app.Environment.IsDevelopment())
         {

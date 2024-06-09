@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using PetConnect.Backend.Contracts;
 using PetConnect.Backend.Core.Abstractions;
 using PetConnect.Backend.Infrastructure;
-using PetConnect.Backend.UseCases.Commands.Reviews;
 using PetConnect.Backend.UseCases.Queries.Reviews.GetAllReviewsByPetOwnerIdQuery;
 using PetConnect.Backend.UseCases.Queries.Reviews.GetAllReviewsByPetSitterIdQuery;
 
@@ -14,8 +13,6 @@ namespace PetConnect.Backend.Service.Controllers;
 /// <summary>
 /// Контроллер для взаимодействия с отзывами текующего пользователя
 /// </summary>
-/// <param name="mediator"></param>
-/// <param name="userAccessor"></param>
 [Authorize(Roles = "PetOwner, PetSitter")]
 [Route("api/reviews")]
 [ApiController]
@@ -44,16 +41,11 @@ public class ReviewsController(IMediator mediator, UserAccessor userAccessor) : 
         Role role = _userAccessor.GetRole();
         long userId = _userAccessor.GetUserId();
 
-        switch (role)
+        return role switch
         {
-            case Role.PetSitter:
-                return _mediator.CreateStream(new GetAllReviewsByPetSitterIdQuery(userId));
-
-            case Role.PetOwner:
-                return _mediator.CreateStream(new GetAllReviewsByPetOwnerIdQuery(userId));
-
-            default:
-                return AsyncEnumerable.Empty<ReviewOutputModel>();
-        }
+            Role.PetSitter => _mediator.CreateStream(new GetAllReviewsByPetSitterIdQuery(userId)),
+            Role.PetOwner => _mediator.CreateStream(new GetAllReviewsByPetOwnerIdQuery(userId)),
+            _ => AsyncEnumerable.Empty<ReviewOutputModel>(),
+        };
     }
 }

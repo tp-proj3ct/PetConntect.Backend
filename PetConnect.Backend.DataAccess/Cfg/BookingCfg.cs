@@ -5,6 +5,9 @@ using PetConnect.Backend.DataAccess.Dto;
 
 namespace PetConnect.Backend.DataAccess.Cfg;
 
+/// <summary>
+/// Конфигурация таблицы с бронированием.
+/// </summary>
 internal class BookingCfg : IEntityTypeConfiguration<Booking>
 {
     public void Configure(EntityTypeBuilder<Booking> builder)

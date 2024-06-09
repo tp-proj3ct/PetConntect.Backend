@@ -7,7 +7,6 @@ using PetConnect.Backend.UseCases.Commands.Pets;
 using PetConnect.Backend.UseCases.Commands.Reviews;
 using PetConnect.Backend.UseCases.Commands.Services;
 
-
 namespace PetConnect.Backend.UseCases;
 
 public class MappingProfile : Profile

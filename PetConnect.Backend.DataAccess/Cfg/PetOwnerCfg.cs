@@ -4,6 +4,9 @@ using PetConnect.Backend.Core.Users;
 
 namespace PetConnect.Backend.DataAccess.Cfg;
 
+/// <summary>
+/// Конфигурация таблицы с владельцами питомцев.
+/// </summary>
 internal class PetOwnerCfg : IEntityTypeConfiguration<PetOwner>
 {
     public void Configure(EntityTypeBuilder<PetOwner> builder)

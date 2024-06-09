@@ -5,9 +5,13 @@ using PetConnect.Backend.Core.Users;
 using PetConnect.Backend.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace PetConnect.Backend.DataAccess;
 
+/// <summary>
+/// Контекст БД.
+/// </summary>
 public class Context : DbContext
 {
     public DbSet<User> Users { get; set; }
@@ -40,14 +44,6 @@ public class Context : DbContext
             // TODO
         }
 
-        modelBuilder.ApplyConfiguration(new UserCfg());
-        modelBuilder.ApplyConfiguration(new PetOwnerCfg());
-        modelBuilder.ApplyConfiguration(new PetSitterCfg());
-        modelBuilder.ApplyConfiguration(new UserProfileCfg());
-        modelBuilder.ApplyConfiguration(new PetCfg());
-        modelBuilder.ApplyConfiguration(new ServiceCfg());
-        modelBuilder.ApplyConfiguration(new ReviewCfg());
-        modelBuilder.ApplyConfiguration(new BookingCfg());
-        modelBuilder.ApplyConfiguration(new PaymentCfg());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserCfg).Assembly);
     }
 }

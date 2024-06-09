@@ -4,6 +4,9 @@ using PetConnect.Backend.Core;
 
 namespace PetConnect.Backend.DataAccess.Cfg;
 
+/// <summary>
+/// Конфигурация таблицы с отзывами.
+/// </summary>
 internal class ReviewCfg : IEntityTypeConfiguration<Review>
 {
     public void Configure(EntityTypeBuilder<Review> builder)

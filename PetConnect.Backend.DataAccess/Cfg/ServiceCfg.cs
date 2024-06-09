@@ -4,6 +4,9 @@ using PetConnect.Backend.Core;
 
 namespace PetConnect.Backend.DataAccess.Cfg;
 
+/// <summary>
+/// Конфигурация таблицы с услугами.
+/// </summary>
 internal class ServiceCfg : IEntityTypeConfiguration<Service>
 {
     public void Configure(EntityTypeBuilder<Service> builder)

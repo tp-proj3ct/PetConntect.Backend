@@ -1,6 +1,4 @@
-﻿using PetConnect.Backend.Core.Abstractions;
-
-namespace PetConnect.Backend.UseCases.Commands.Pets;
+﻿namespace PetConnect.Backend.UseCases.Commands.Pets;
 /// <summary>
 /// Модель ввода для создания питомца.
 /// </summary>

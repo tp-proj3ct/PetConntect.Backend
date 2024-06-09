@@ -4,11 +4,17 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace PetConnect.Backend.Service.SwaggerFilters;
 
+/// <summary>
+/// Фильтр требуемых ролей для доступа к эндпоинту для сваггера
+/// </summary>
 public class SecurityRequirementsOperationFilter : IOperationFilter
 {
+    /// <summary>
+    /// Применить
+    /// </summary>
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        var hasAuthorizeAttribute = context.MethodInfo.DeclaringType.GetCustomAttributes(true)
+        var hasAuthorizeAttribute = context.MethodInfo.DeclaringType!.GetCustomAttributes(true)
             .OfType<AuthorizeAttribute>().Any() ||
             context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any();
 

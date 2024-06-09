@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using PetConnect.Backend.Core.Abstractions;
+﻿using PetConnect.Backend.Core.Abstractions;
 using PetConnect.Backend.UseCases.Abstractions;
 using System.Security.Claims;
 
 namespace PetConnect.Backend.Infrastructure;
+
 /// <summary>
 /// Сервис для доступа к данным пользователя.
 /// </summary>
@@ -27,6 +27,7 @@ public class UserAccessor(IHttpContextAccessor httpContextAccessor) : IUserAcces
 
         return -1;
     }
+
     /// <summary>
     /// Получить юзернейм пользователя.
     /// </summary>
@@ -35,6 +36,7 @@ public class UserAccessor(IHttpContextAccessor httpContextAccessor) : IUserAcces
     {
         return _user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value ?? string.Empty;
     }
+
     /// <summary>
     /// Получить роль пользователя.
     /// </summary>

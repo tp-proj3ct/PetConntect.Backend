@@ -115,14 +115,14 @@ public static class Program
         services.AddScoped<IBookingRepository, BookingRepository>();
         services.AddScoped<UserAccessor>();
         // Options
-        services.Configure<PetConnect.Backend.Core.Options.PasswordOptions>(configuration.GetSection("PasswordOptions"));
+        services.Configure<PasswordOptions>(configuration.GetSection("PasswordOptions"));
         services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
     }
 
     private static void AddAuthentication(IServiceCollection services, ConfigurationManager configuration)
     {
         var jwtConfig = configuration.GetSection("Jwt");
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig["Key"]));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig["Key"]!));
 
         services.AddAuthentication(options =>
         {

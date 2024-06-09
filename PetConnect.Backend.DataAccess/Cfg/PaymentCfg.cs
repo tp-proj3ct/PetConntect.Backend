@@ -4,6 +4,9 @@ using PetConnect.Backend.Core;
 
 namespace PetConnect.Backend.DataAccess.Cfg;
 
+/// <summary>
+/// Конфигурация таблицы с платежами.
+/// </summary>
 internal class PaymentCfg : IEntityTypeConfiguration<Payment>
 {
     public void Configure(EntityTypeBuilder<Payment> builder)

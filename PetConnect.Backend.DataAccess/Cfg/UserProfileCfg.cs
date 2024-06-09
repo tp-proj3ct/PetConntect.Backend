@@ -4,6 +4,9 @@ using PetConnect.Backend.Core;
 
 namespace PetConnect.Backend.DataAccess.Cfg;
 
+/// <summary>
+/// Конфигурация таблицы с профилями пользователей.
+/// </summary>
 internal class UserProfileCfg : IEntityTypeConfiguration<UserProfile>
 {
     public void Configure(EntityTypeBuilder<UserProfile> builder)

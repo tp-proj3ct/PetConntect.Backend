@@ -4,11 +4,17 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace PetConnect.Backend.Service.SwaggerFilters;
 
+/// <summary>
+/// Фильтр авторизации для сваггера
+/// </summary>
 public class AuthorizeCheckOperationFilter : IOperationFilter
 {
+    /// <summary>
+    /// Применение
+    /// </summary>
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        var controllerAuthAttributes = context.MethodInfo.DeclaringType
+        var controllerAuthAttributes = context.MethodInfo.DeclaringType!
             .GetCustomAttributes(true)
             .OfType<AuthorizeAttribute>()
             .Distinct();

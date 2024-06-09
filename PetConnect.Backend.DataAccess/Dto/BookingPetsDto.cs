@@ -3,7 +3,7 @@
 namespace PetConnect.Backend.DataAccess.Dto;
 
 /// <summary>
-/// Промежуточная таблица
+/// Промежуточная таблица между бронированием и питомцами
 /// </summary>
 public class BookingPetsDto
 {
